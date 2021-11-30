@@ -55,3 +55,21 @@ Future work for this project includes manually labeling the comments and then tr
 RSAH rebalancing algorithms and automation would be another area of improvement for the future. Licensing and listing would then come after the product is published.
 Lastly, I would like to explore further in my time series work with NLP. I thought I was able to make good progress there. One thing I worked on was researching sentiment trends over time. I started working with stacked LSTMs to predict price as well. My intuition would be that the viable way to proceed would be to refine the sentiment analyzer before fusing it with several layers of quantitative financial data in some type of neural network.
 Obviously over the course of several years, this may progress to development and implementation of low latency algorithmic trading strategies integrating machine readable indicators such as NLP.
+
+## For More Information
+
+See the full analysis in the Jupyter Notebook or review this Presentation.
+
+For additional info contact Doug Mill.
+
+## Repository Structure
+
+```
+├── appendix
+├── data
+├── images
+├── .gitignore
+├── README.md
+├── Reddit_Sentiment_Analysis.ipynb
+├── environment.yml
+└── presentation.pdf
