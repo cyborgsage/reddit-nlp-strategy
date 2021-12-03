@@ -71,7 +71,7 @@ Time Series with VADER: https://blog.quantinsti.com/vader-sentiment/
 
 ## For More Information
 
-See the full analysis in the Jupyter Notebook or review this Presentation.
+See the full analysis in the [Jupyter Notebook](./Reddit_Sentiment_Analysis.ipynb) or review this [Presentation](./presentation.pdf).
 
 For additional info contact [Doug Mill](mailto:douglas_mill@live.com).
 
