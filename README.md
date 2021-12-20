@@ -58,7 +58,7 @@ Through iterative modeling, I was able to test out random forest, naive bayes, d
 The best use of this model is to predict the sentiment of AMC comments. I deployed the model to a dashboard where can mess around with the hyperparameters and see what score they would get.
 Given the context of the business problem, a financial product based on NLP designed with the stakeholder as well as the broader audience is in my opinion the best way at this time to profit from the information on wallstreetbets. This financial product is an ETF named RSAH (reddit sentiment analysis holdings). It holds the top 10 most mentioned tickers on WSB for the past 30d period. The ETF will be rebalanced monthly with proprietary weighting.
 
-Deployed my Streamlit app with Heroku [Here](https://amcsentimentanalysis.herokuapp.com/)
+Deployed my Streamlit app with Heroku [here](https://amcsentimentanalysis.herokuapp.com/).
 
 ## Future Research
 
