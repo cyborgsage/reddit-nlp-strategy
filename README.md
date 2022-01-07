@@ -46,9 +46,11 @@ To take a closer look at the sentiment data, I have taken the unupdated VADER re
 
 ## Regression Results
 
-At the beginning, all the models besides naive bayes were overfitting, and they also had lower test scores than the naive bayes. I ran count vectorizer, tfidf vectorizer, and SMOTE on them. I did naive bayes with a count vectorizer and tfidf vectorizer. The tfidf vectorizer came out better. Unfortunately, naive bayes doesn't have too many parameters. Xgboost is also close but slightly lower in accuracy and has an overfitting problem. In the late stages of my project, random forest emerged with a strong accuracy score. When I ran a gridsearch on random forest and followed the parameters, the model was able to defeat the naive bayes accuracy. However, in the context of the problem, 3000 estimators and a max depth of 150 will be overfitting my training set. In order to have realistic parameters and a realistic solution, the naive bayes did the best overall and did not have massive overfitting.
+At the beginning, all the models besides naive bayes were overfitting, and they also had lower test scores than the Naive Bayes. I ran count vectorizer, tfidf vectorizer, and SMOTE on them. I did naive bayes with a count vectorizer and tfidf vectorizer. The tfidf vectorizer came out better. Xgboost is also close but slightly lower in accuracy and has an overfitting problem. In the late stages of my project, random forest emerged with a strong accuracy score. When I ran a gridsearch on random forest and followed the parameters, the model was able to score similarly to Naive Bayes. However, in the context of the problem, 3000 estimators and a max depth of 150 will be overfitting my training set. In order to have realistic parameters and a realistic solution, the naive bayes did the best overall and did not have massive overfitting.
 
 ![NB](./images/NBmatrix.png)
+
+The reasoning is because the random forest would have 2^k possible feature interactions, so you would likely need 2^k data points for a high-performing model. Due to the conditional independence assumption in Naive Bayes, you only need k data points, which removes this problem. In the context of text classification, this assumption is convenient because there are many predictors (words) that are generally independent of each other.
 
 
 ## Conclusion
