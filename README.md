@@ -18,10 +18,10 @@ My project is about stock sentiment in social media and how to best use this uns
 
 The data that was used for this project was exclusively scraped from the wallstreetbets subreddit of the social media platform Reddit. A subreddit is a subgroup of the platform dedicated to their own shared interest. In the case of wallstreetbets, that happens to be trading. When I first joined the group in 2019, directional single leg options were almost exclusively promoted. Shares were frowned upon. With the humungous movements in stocks such as AMC and GME, things changed in the subreddit forever. The popularity of the board skyrocketed, reaching mainstream appeal, and people were seeing huge gains in shares. What made these companies unique was that AMC was a company on the verge of bankruptcy. Gamestop was an outdated brick and mortar video game retailer. How did these companies explode? The answer lies partially in shorts, gamma squeezing, and the wallstreetbets subreddit. In order to investigate, I scraped 100k comments containing the keyword "AMC" and 100k comments containing the keyword "GME" from wallstreetbets. **I decided to focus specifically on the AMC comments.** The comments were posted between 1/1/21 and 11/20/21, when the project commenced. I used the PushShift API which does a great job with collected big amounts of data relative to the Reddit API.
 
-I performed NLP Sentiment Analysis with VADER on all 100k comments and performed EDA on the results. I also did supervised learning using the VADER predicted sentiments as my labels and achieved 72% accuracy using Naive Bayes.
+I performed NLP Sentiment Analysis with VADER on all 100k comments and performed EDA on the results. I also did supervised learning using the VADER predicted sentiments as my labels and achieved 75% accuracy using XGBoost.
 
 ![EDA of VADER predictions on 100k comments](./images/download.png)
-![Naive Bayes on the VADER labels](./images/matrix.png)
+![Naive Bayes on the VADER labels](./images/xgboost_matrix.png)
 
 ## Data Preparation
 
