@@ -21,7 +21,7 @@ The data that was used for this project was exclusively scraped from the wallstr
 I performed NLP Sentiment Analysis with VADER on all 100k comments and performed EDA on the results. I also did supervised learning using the VADER predicted sentiments as my labels and achieved 75% accuracy using XGBoost.
 
 ![EDA of VADER predictions on 100k comments](./images/download.png)
-![Naive Bayes on the VADER labels](./images/xgboost_matrix.png)
+
 
 ## Data Preparation
 
@@ -56,6 +56,10 @@ At the beginning, all the models besides naive bayes were overfitting, and they 
 ![NB](./images/NBmatrix.png)
 
 The reasoning is because the random forest would have 2^k possible feature interactions, so you would likely need 2^k data points for a high-performing model. Due to the conditional independence assumption in Naive Bayes, you only need k data points, which removes this problem. In the context of text classification, this assumption is convenient because there are many predictors (words) that are generally independent of each other.
+
+![NB](./images/xgboost_matrix.png)
+
+**As far as my best performing model overall, it was using XGBoost Classifier on the 100k VADER predicted labels. **
 
 
 ## Conclusion
