@@ -12,7 +12,7 @@ Interest in the stock market has grown in the past few years, with COVID seeming
 
 ## Business Understanding
 
-My project is about stock sentiment in social media and how to best use this unstructed information. I am answering the question "Are wallstreetbets comments worth mining as an information source for stock analysis?". I am representing an independent asset management and research firm that was contacted by an international pension and sovereign wealth fund. Previously, they had only been subscribed to traditional market news. When the GME and AMC squeezes broke the news, the fund took notice. They have asked me to publish research about whether the wallstreetbets subreddit is worth mining as an information source and inquired about diversifying into meme stocks. My goal here is to fulfill their needs efficiently and practically. **I took a two-pronged approach to NLP; training classification models with a manually labeled sample as my target, and using NLP to find the top mentioned tickers on r/wsb. For my supervised learning, I only focused on AMC comment data, but similar context and understanding can be applied to other memes such as GME and CLOV. **
+My project is about stock sentiment in social media and how to best use this unstructed information. I am answering the question "Are wallstreetbets comments worth mining as an information source for stock analysis?". I am representing an independent asset management and research firm that was contacted by an international pension and sovereign wealth fund. Previously, they had only been subscribed to traditional market news. When the GME and AMC squeezes broke the news, the fund took notice. They have asked me to publish research about whether the wallstreetbets subreddit is worth mining as an information source and inquired about diversifying into meme stocks. My goal here is to fulfill their needs efficiently and practically. I took a two-pronged approach to NLP in training classification models and also using NLP to find the top mentioned tickers on r/wsb. For my supervised learning, I focused on AMC comment data, but similar context and understanding can be applied to other memes such as GME.
 
 ## Data Understanding
 
@@ -29,7 +29,7 @@ For data preparation, I took my files straight from the API and then cleaned the
 
 ![AMC Sentiment Distribution](./images/VaderAMC.png)
 
-After doing this, I realized that I had to establish a ground truth target column. The only way to do this was to manually label the comments myself. I manually labeled 1000 comments each for AMC and GME data. After this, I compared my results to VADER and began to train my own machine learning models on my labels. The positive=bullish, neutral=neutral/can't tell/can't understand, negative=bearish. Here is the distribution of sentiments:
+After doing this, I wanted to train models on my own opinion of ground truth. I did also train models on the VADER labels [here](.appendix/AMC_modeling.ipynb). The only way to do this was to manually label the comments myself. I manually labeled 1000 comments each for AMC. After this, I compared my results to VADER and began to train my own machine learning models on my labels. The positive=bullish, neutral=neutral/can't tell/can't understand, negative=bearish. Here is the distribution of sentiments:
 
 ![Label Sentiment Distribution](./images/AMClabeledDist.png)
 
@@ -41,9 +41,9 @@ The rules that I followed when modeling included the following:
 1. AMC Sentiment Only. Sentiments on other things such as other stocks, forum rules, other users, and trading styles were disregarded. <br>
 2. Bullish=Positive, Neutral=Neutral, Bearish=Negative. Ex: When the person was excited about making money on shorts, it was still negative. Someone complaining about forum/audience is neutral about the stock. <br>
 
-The preprocessing for VADER included converting comments to lowercase, removing "@" mentions between users, removing links, removing stopwords, and vectorizing. I also tested VADER without any preprocessing and it performed the same against my manually labeled data. Both VADER models were about 47% accurate as compared to my manual labels in a random sample of 1000 comments. The tuned one was slightly better at 47.4%.
+The preprocessing for VADER included converting comments to lowercase, removing "@" mentions between users, removing links, removing stopwords, and vectorizing. I also tested VADER without any preprocessing and it performed the same against my manually labeled data. Both VADER models were about 47% accurate as compared to my manual labels in a random sample of 1000 comments. The tuned one was slightly better at 47.4%. I then modeled AMC comments with classification techniques such as naive bayes, decision tree, random forest, and xgboost. I implemented pipelines and cross validation for each model. I used SMOTE to fix any slight class imbalances with minority oversampling. Naive Bayes was my early favorite and a solid, stable baseline model. Decision tree and xgboost were both decent but overfitting. Random Forest was also overfitting, but had potential for a high test score. Due to the constraints of my data, I went with the Naive Bayes model and this resulted in my highest test accuracy score of 57%.
 
-I then modeled AMC comments with classification techniques such as naive bayes, decision tree, random forest, and xgboost. I implemented pipelines and cross validation for each model. I used SMOTE to fix any slight class imbalances with minority oversampling. Naive Bayes was my early favorite and a solid, stable baseline model. Decision tree and xgboost were both decent but overfitting. Random Forest was also overfitting, but had potential for a high test score. **Due to the constraints of my data, I went with the Naive Bayes model and this resulted in my highest test accuracy score of 57%.**
+I trained supervised learning models on my VADER predicted labels for all 100k comments as well. I was able to achieve 75% accuracy with XGBoost and 71% accuracy with Naive Bayes. I also tried decision tree and random forest but they were overfitting. 
 
 To take a closer look at the sentiment data, I have taken the unupdated VADER results and plotted them in a time series. I normalized the sentiments and stock price also. I then overlayed the chart with the stock price. I want to show the AMC graph, because it illustrates how sentiment can potentially be used as an indicator and supplement to your analysis.
 
@@ -66,8 +66,6 @@ The reasoning is because the random forest would have 2^k possible feature inter
 
 The model did well classifying the sentiment of comments based on VADER. The alternative to using VADER labeling as my target would be manual labeling comments in a couple of 100k entry datasets. I ended up actually doing this for a 1000 comment random sample of AMC data. Given the evolving lingo as well as the sarcasm and context involved with each comment, there is no fool proof method including manual labeling. While I was reading the comments, I found myself between sentiments at times, often even considering all 3. The involvement of VADER in the bigger picture proves to be useful and reliable. I was able to reach 75% accuracy training a XGBoost classifier on the 100k comment dataset that included all the VADER labels. This can be found in [this notebook](./appendix/AMC_modeling.ipynb). Detailed EDA into the VADER labeled 100k comment dataset can be found [here](./appendix/AMC_EDA.ipynb).
 
-Through iterative modeling, I was able to test out random forest, naive bayes, decision tree, and XGBoost. Naive Bayes did great, reaching 57% accuracy. VADER came up with 47% and random chance would have been 33% as there are 3 categories.
-The best use of this model is to predict the sentiment of AMC comments. I deployed the model to a dashboard where can mess around with the hyperparameters and see what score they would get.
 Given the context of the business problem, a financial product based on NLP designed with the stakeholder as well as the broader audience is in my opinion the best way at this time to profit from the information on wallstreetbets. This financial product is an ETF named RSAH (reddit sentiment analysis holdings). It holds the top 10 most mentioned tickers on WSB for the past 30d period. The ETF will be rebalanced monthly with proprietary weighting.
 
 Deployed my Streamlit app with Heroku [here](https://amcsentimentanalysis.herokuapp.com/).
@@ -75,8 +73,7 @@ Deployed my Streamlit app with Heroku [here](https://amcsentimentanalysis.heroku
 ## Future Research
 
 Future work for this project includes manually labeling the GME comments and then training models based upon those labels. This would be tough work as well as tedious as many comments are quite subjective and interpretable in multiple ways.
-Lastly, I would like to explore further in my time series work with NLP. I thought I was able to make good progress there. One thing I worked on was researching sentiment trends over time. I started working with stacked LSTMs to predict price as well. My intuition would be that the viable way to proceed would be to refine the sentiment analyzer before fusing it with several layers of quantitative financial data in some type of neural network. I would also like to try working with structured NLP data.
-Over the course of several years, this may progress to development and implementation of low latency algorithmic trading strategies integrating machine readable indicators such as NLP.
+Lastly, I would like to explore further in my time series work with NLP. I thought I was able to make good progress there. One thing I worked on was researching sentiment trends over time.
 
 ## References
 
